@@ -52,7 +52,7 @@ jobs:
 
   # add another job for deployment
   deploy:
-    name: Deploy to Heroku
+    name: Deploy to Ubuntu
 
     # this job will run only when the build-and-test job is successful
     needs: build-and-test
@@ -74,6 +74,10 @@ jobs:
             script: |
               cd /home/majid/applications/next-cicd-docker # we move into our app's folder
               git pull # we pull any changes from git
+              export NVM_DIR="$HOME/.nvm"
+              [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+              [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+              . ~/.bashrc
               npm prune # we remove any unused dependencies
               npm install # we install any missing dependencies
               npm run build # we build our app
