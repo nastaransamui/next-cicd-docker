@@ -1,32 +1,56 @@
-name: Node.js CI/CD
+# name you can give any name
+name: Continuous Integration and Continuous Deployment on Ubuntu
 
-on: [push] # tells github to run this on any push to the repository
+# triggers ci cd when you push code to any branch
+on:
+  push:
+  pull_request:
+  # this is for manual trigger of ci cd workflow from github actions
+  workflow_dispatch:
 
+# jobs is the place where you define all the steps
 jobs:
-  test: # names the job
-    runs-on: ubuntu-latest # sets the version of linux we want to use, should be what you have on your server
-
-    strategy:
-      fail-fast: false # tells github to not run further steps if this one fails
-      matrix:
-        node-version: [12.x] # sets the version of node we want to use, should be what you have on your server
+  build-and-test:
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2 # fetches your commit to test it
-      - name: Use Node.js ${{ matrix.node-version }} # names our step
-        uses: actions/setup-node@v2 # downloads node and npm
+      - uses: actions/checkout@v2
         with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm install # installs your dependencies
-      # - run: npm run test # builds your app
-      # - run: npm test # runs your test suite
-        env:
-          CI: true # shows terminal output!
+          # Fetch all history for all branches and tags
+          fetch-depth: 0
 
+      # install nodejs
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20.x'
+
+      # install dependencies
+      - name: Install Dependencies
+        run: npm install
+
+      # run linters
+      - name: Run Linters
+        run: npm run lint
+
+      # run formater
+      - name: Run Formater
+        run: npm run format
+
+      # verify the commit message with commitlint and commitlint.config.js
+      # - name: Verify Commit Message
+      #   uses: wagoid/commitlint-github-action@v3
+      #   with:
+      #     configFile: commitlint.config.cjs
+
+      # build docker image for ci cd pipeline
+      - name: Build Docker Image
+        run: docker build -t nextjs-cicd-docker:1.0 .
   deploy:
     runs-on: ubuntu-latest
-    needs: test # this job depends on "test" having finished
-    if: github.ref == 'refs/heads/master' # we tell Github to only execute this step if we're on our master branch (so we don't put unfinished branches in production)
+    needs: build-and-test #this job depends on "test" having finished
+    #we tell Github to only execute this step if we're on our master branch (so we don't put unfinished branches in production)
+    if: github.ref == 'refs/heads/master' 
     steps:
       - name: Deploying to Digitalocean droplet
         uses: appleboy/ssh-action@master # An action made to control Linux servers
@@ -36,7 +60,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd <your-app-folder> # we move into our app's folder
+            cd /home/majid/applications/next-cicd-docker # we move into our app's folder
             git pull # we pull any changes from git
             npm prune # we remove any unused dependencies
             npm install # we install any missing dependencies
