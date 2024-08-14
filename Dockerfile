@@ -20,7 +20,7 @@ RUN npm run build
 
 # it will not work on production environment, locally if i test the image by creating new container it will actually use the port 3000. On heruko we can set the port then it will be ingnored but locally it will use the port 3000. 
 
-EXPOSE 3000
+EXPOSE 7000
 
 #for run our nextjs project for production
 CMD [ "npm", "run", "start" ]
