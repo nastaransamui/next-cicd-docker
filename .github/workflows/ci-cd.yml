@@ -48,8 +48,6 @@ jobs:
       - name: Build Docker Image
         run: docker build -t nextjs-cicd-docker:1.0 .
 
-
-
   # add another job for deployment
   deploy:
     name: Deploy to Ubuntu
@@ -67,15 +65,15 @@ jobs:
         with:
           # presist credentials is false because we don't want to push the code to heroku from github actions. We want to push the code to heroku from heroku cli.
           # persist-credentials: false
-            host: ${{ secrets.HOST }}
-            username: ${{ secrets.USERNAME }}
-            password: ${{ secrets.PASSWORD }}
-            port: ${{ secrets.PORT }}
-            script: |
-              cd /home/majid/applications/next-cicd-docker # we move into our app's folder
-              git pull # we pull any changes from git
-              export NVM_DIR="$HOME/.nvm"
-              [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-              [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-              . ~/.bashrc
-              docker-compose up -d
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /home/majid/applications/next-cicd-docker # we move into our app's folder
+            git pull # we pull any changes from git
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+            . ~/.bashrc
+            docker-compose up -d
