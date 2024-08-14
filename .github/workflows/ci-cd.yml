@@ -1,5 +1,6 @@
 # name you can give any name
 name: Continuous Integration and Continuous Deployment on Ubuntu
+
 # triggers ci cd when you push code to any branch
 on:
   push:
@@ -23,15 +24,16 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '20.x'
+
       # install dependencies
       - name: Install Dependencies
         run: npm install
 
-      #run linters
+      # run linters
       - name: Run Linters
         run: npm run lint
 
-      # fun formater
+      # run formater
       - name: Run Formater
         run: npm run format
 
