@@ -46,7 +46,7 @@ jobs:
       # build docker image for ci cd pipeline
       - name: Build Docker Image
         run: docker build -t nextjs-cicd-docker:1.0 .
-  pass-secret-to-deply:
+  pass-secret-to-action:
     uses: ./.github/workflows/ci-cd.yml
     secrets:
       host: ${{ secrets.HOST }}
