@@ -1,5 +1,5 @@
 # name you can give any name
-name: Continuous Integration and Continuous Deployment on Ubuntu
+name: Continuous Integration and Continuous Deployment on Heroku
 
 # triggers ci cd when you push code to any branch
 on:
@@ -38,39 +38,43 @@ jobs:
         run: npm run format
 
       # verify the commit message with commitlint and commitlint.config.js
-      # - name: Verify Commit Message
-      #   uses: wagoid/commitlint-github-action@v3
-      #   with:
-      #     configFile: commitlint.config.cjs
+      - name: Verify Commit Message
+        uses: wagoid/commitlint-github-action@v3
+        with:
+          configFile: commitlint.config.cjs
 
       # build docker image for ci cd pipeline
+      # Name should be same as the name of the image in docker-compose.yml file with tag 1.0 and . represents the path of the dockerfile in the repo.
       - name: Build Docker Image
         run: docker build -t nextjs-cicd-docker:1.0 .
-  pass-secret-to-action:
-    uses: ./.github/workflows/ci-cd.yml
-    secrets:
-      host: ${{ secrets.HOST }}
-      username: ${{ secrets.USERNAME }}
-      password: ${{ secrets.PASSWORD }}
-      port: ${{ secrets.PORT }}
-      
+
+
+
+  # add another job for deployment
   deploy:
-    runs-on: ubuntu-latest
+    name: Deploy to Heroku
+
+    # this job will run only when the build-and-test job is successful
     needs: build-and-test
+
+    # if condition is because we want to run this job only when we push code to main branch and not on pull request or any other branch push or manual trigger. In ci we want ci to run on push and pull request but we want cd to run only on push to main branch.
+    if: (github.ref == 'refs/heads/main' && github.event_name == 'push') || github.event_name == 'workflow_dispatch'
+
+    runs-on: ubuntu-latest
+
     steps:
       - uses: appleboy/ssh-action@master
-      
-      - name: Deploying to Server
-        uses: appleboy/ssh-action@v1.0.3 
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          script: |
-            cd /home/majid/applications/next-cicd-docker # we move into our app's folder
-            git pull # we pull any changes from git
-            npm prune # we remove any unused dependencies
-            npm install # we install any missing dependencies
-            npm run build # we build our app
-            pm2 reload all # we reload the app via PM2
+          # presist credentials is false because we don't want to push the code to heroku from github actions. We want to push the code to heroku from heroku cli.
+          # persist-credentials: false
+            host: ${{ secrets.HOST }}
+            username: ${{ secrets.USERNAME }}
+            password: ${{ secrets.PASSWORD }}
+            port: ${{ secrets.PORT }}
+            script: |
+              cd <your-app-folder> # we move into our app's folder
+              git pull # we pull any changes from git
+              npm prune # we remove any unused dependencies
+              npm install # we install any missing dependencies
+              npm run build # we build our app
+              pm2 reload all # we reload the app via PM2
