@@ -6,7 +6,7 @@ module.exports = {
   rules: {
     // here 2 means error, always means always check, 10 means min length of header message. See https://commitlint.js.org/#/reference-rules
 
-    'header-min-length': [2, 'always', 20],
+    'header-min-length': [2, 'always', 10],
     // here means that header message must start with a capital letter. we din't set any value because i will be using regex to verrify that header message starts with a capital letter.
 
     'header-case-start-capital': [2, 'always'],
