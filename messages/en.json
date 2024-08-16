@@ -1,0 +1,55 @@
+{
+  "Header": {
+    "login": "Login",
+    "followUs": "Follow us:",
+    "home": "Home",
+    "homeV1": "Home V1",
+    "homeV2": "Home V2",
+    "homeV3": "Home V3",
+    "about": "About",
+    "destination": "Destinations",
+    "tour": "Tour",
+    "blog": "Blog",
+    "hotel": "Hotels",
+    "pages": "Pages",
+    "contact": "Contact",
+    "tourPage": "Tour Page",
+    "tourList": "Tour List",
+    "tourGrid": "Tour Grid",
+    "tourDetails": "Tour Details",
+    "tourDetails2": "Tour Details 2",
+    "tourDetails3": "Tour Details 3",
+    "th": "Thai",
+    "en": "English",
+    "cn": "Chinese",
+    "bookingPage": "Booking Pages",
+    "portfolio": "Portfolio",
+    "tours": "Tours",
+    "gallery": "Gallery",
+    "testimonial": "Testimonial",
+    "otherPages": "Other Pages",
+    "signIn": "Sign up",
+    "404Error": "404 Error",
+    "faqs": "Faqs",
+    "siteMap": "Site Map",
+    "summerEscaps": "Summer escaps",
+    "planNext": "Plan your next trip with us.",
+    "viewDeals": "View deals",
+    "searchHere": "Search here",
+    "ourCookiePolicy": "Our Cookie policy",
+    "lorem": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    "agree": "Okay, I Agree",
+    "notSeeAnymore": "I don't want to see this anymore."
+  },
+  "NotFoundPage": {
+    "description": "This page not found",
+    "gobackHome": "Go back Home"
+  },
+  "Manifest": {
+    "name": "name"
+  },
+  "Metadata": {
+    "title": "Travel Passion",
+    "description": "Description"
+  }
+}

@@ -1,0 +1,146 @@
+import { test, expect } from '@playwright/test';
+
+test.beforeEach(async ({ page }) => {
+  await page.goto('http://localhost:7000');
+});
+
+test.describe('Test for first narrow header', () => {
+  test('Url should redirect ot current language that is Englishg', async ({
+    page,
+  }) => {
+    await expect(page).toHaveURL(/.*en/);
+  });
+  test('should have follow us', async ({ page }) => {
+    await expect(
+      page.locator('div').filter({ hasText: 'Follow us:+66 870 62' }).first()
+    ).toBeVisible();
+  });
+
+  test('should have facebook icon', async ({ page }) => {
+    await expect(
+      page
+        .locator('div')
+        .filter({ hasText: /^Follow us:$/ })
+        .getByRole('link')
+        .first()
+    ).toBeVisible();
+  });
+
+  test('should have instagram icon', async ({ page }) => {
+    await expect(
+      page
+        .locator('div')
+        .filter({ hasText: /^Follow us:$/ })
+        .getByRole('link')
+        .nth(1)
+    ).toBeVisible();
+  });
+  test('should have youtube icon', async ({ page }) => {
+    await expect(
+      page
+        .locator('div')
+        .filter({ hasText: /^Follow us:$/ })
+        .getByRole('link')
+        .nth(2)
+    ).toBeVisible();
+  });
+
+  test('should have contact phone', async ({ page }) => {
+    await expect(page.getByRole('link', { name: '+66 870 62' })).toBeVisible();
+    await expect(
+      page.locator('ul').filter({ hasText: 'English' }).locator('#language')
+    ).toBeVisible();
+  });
+
+  test('should have language button with English', async ({ page }) => {
+    await expect(
+      page.locator('ul').filter({ hasText: 'English' }).locator('#language')
+    ).toBeVisible();
+  });
+  test('should have language login button', async ({ page }) => {
+    await expect(page.getByRole('link', { name: 'Login' })).toBeVisible();
+  });
+});
+
+test.describe('Test for main Header', () => {
+  test('should have main logo', async ({ page }) => {
+    await expect(page.locator('.max-w-\\[150px\\]')).toBeVisible();
+  });
+  test('should have Home', async ({ page }) => {
+    await expect(
+      page.getByRole('link', { name: 'Home', exact: true })
+    ).toBeVisible();
+  });
+  test('should have About', async ({ page }) => {
+    await expect(page.getByRole('link', { name: 'About' })).toBeVisible();
+  });
+  test('should have Destinations', async ({ page }) => {
+    await expect(
+      page.getByRole('link', { name: 'Destinations' })
+    ).toBeVisible();
+  });
+  test('should have Tour', async ({ page }) => {
+    await expect(page.getByRole('link', { name: 'Tour' })).toBeVisible();
+  });
+  test('should have Blog', async ({ page }) => {
+    await expect(page.getByRole('link', { name: 'Blog' })).toBeVisible();
+  });
+  test('should have Hotels', async ({ page }) => {
+    await expect(page.getByRole('link', { name: 'Hotels' })).toBeVisible();
+  });
+  test('should have Pages', async ({ page }) => {
+    await expect(page.getByRole('link', { name: 'Pages' })).toBeVisible();
+  });
+  test('should have Contact', async ({ page }) => {
+    await expect(page.getByRole('link', { name: 'Contact' })).toBeVisible();
+  });
+  test('should have Search icon', async ({ page }) => {
+    await expect(page.locator('.search-icon > .bg-primary-900')).toBeVisible();
+  });
+});
+
+test.describe('Check cookie acceptance', () => {
+  test('should wait for 4 seconds and see cookies', async ({ page }) => {
+    await page.waitForTimeout(4000);
+    await expect(page.locator('.mfp-content').first()).toBeVisible();
+    await page.waitForTimeout(6000);
+    await page.getByTestId('close-cookies').click();
+    await expect(page.locator('.mfp-content').first()).toBeHidden();
+  });
+});
+
+test.describe('Test 3 language', () => {
+  test('should click on English Language button open the 3 language', async ({
+    page,
+  }) => {
+    await page.locator('ul').locator('div').locator('#language').click();
+    await expect(page.locator('#en-button')).toHaveClass(/en-button-active/);
+    await expect(page.locator('#cn-button')).toHaveClass(/cn-button-active/);
+    await expect(page.locator('#th-button')).toHaveClass(/th-button-active/);
+  });
+  test('should click on chines button and url change to /cn', async ({
+    page,
+  }) => {
+    await page.locator('ul').locator('div').locator('#language').click();
+    await page.locator('#cn-button').click();
+    await page.waitForTimeout(1000);
+    await expect(page).toHaveURL(/.*cn/);
+  });
+
+  test('should click on thai button and url change to /th', async ({
+    page,
+  }) => {
+    await page.locator('ul').locator('div').locator('#language').click();
+    await page.locator('#th-button').click();
+    await page.waitForTimeout(1000);
+    await expect(page).toHaveURL(/.*th/);
+  });
+  test('should click on English button and url change to /en', async ({
+    page,
+  }) => {
+    await page.locator('ul').locator('div').locator('#language').click();
+    await page.locator('#en-button').click();
+    await page.waitForTimeout(1000);
+    await expect(page).toHaveURL(/.*en/);
+  });
+});

@@ -14,7 +14,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           # Fetch all history for all branches and tags
           fetch-depth: 0
@@ -42,7 +43,25 @@ jobs:
         uses: wagoid/commitlint-github-action@v3
         with:
           configFile: commitlint.config.cjs
+      
+      #run tests
+      - name: 'install dependencies'
+        run: npm ci
+      
+      - name: install Playwright Browsers
+        run: npx playwright install --with-deps
 
+      - name: Run Playwright test
+        run: npx playwright test --headed
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+      
+      
       # build docker image for ci cd pipeline
       # Name should be same as the name of the image in docker-compose.yml file with tag 1.0 and . represents the path of the dockerfile in the repo.
       - name: Build Docker Image

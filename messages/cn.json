@@ -1,0 +1,55 @@
+{
+  "Header": {
+    "login": "登录",
+    "followUs": "关注我们：",
+    "home": "首页",
+    "homeV1": "主页 V1",
+    "homeV2": "主页 V2",
+    "homeV3": "主页 V3",
+    "about": "关于",
+    "destination": "目的地",
+    "tour": "旅游",
+    "blog": "博客",
+    "hotel": "酒店",
+    "pages": "页面",
+    "contact": "联系方式",
+    "tourPage": "游览页面",
+    "tourList": "旅游列表",
+    "tourGrid": "旅游网格",
+    "tourDetails": "游览详情",
+    "tourDetails2": "游览详情 2",
+    "tourDetails3": "旅游详情 3",
+    "th": "泰語",
+    "en": "英文",
+    "cn": "中文",
+    "bookingPage": "預訂頁面",
+    "portfolio": "投資組合",
+    "tours": "投資組合",
+    "gallery": "投資組合",
+    "testimonial": "感言",
+    "otherPages": "其他頁面",
+    "signIn": "註冊",
+    "404Error": "404 錯誤",
+    "faqs": "常見問題",
+    "siteMap": "網站地圖",
+    "summerEscaps": "夏季逃離",
+    "planNext": "與我們一起規劃您的下一次旅行。",
+    "viewDeals": "查看優惠",
+    "searchHere": "在這裡搜尋",
+    "ourCookiePolicy": "我們的 Cookie 保單",
+    "lorem": "Lorem Ipsum 只是印刷和排版行業的虛擬文本。自1500 年代以來，Lorem Ipsum 一直是行業的標準虛擬文本，當時一位不知名的印刷商拿走了一堆字體並將其打亂以製作一本字體樣本書它不僅經歷了五個世紀，而且跨越了電子排版，基本上保持不變。",
+    "agree": "好的，我同意",
+    "notSeeAnymore": "我不想再看到這個了。"
+  },
+  "NotFoundPage": {
+    "description": "未找到此页面",
+    "gobackHome": "返回主页"
+  },
+  "Manifest": {
+    "name": "姓名"
+  },
+  "Metadata": {
+    "title": "旅游激情",
+    "description": "描述"
+  }
+}
