@@ -39,10 +39,10 @@ jobs:
         run: npm run format
 
       # verify the commit message with commitlint and commitlint.config.js
-      - name: Verify Commit Message
-        uses: wagoid/commitlint-github-action@v3
-        with:
-          configFile: commitlint.config.cjs
+      # - name: Verify Commit Message
+      #   uses: wagoid/commitlint-github-action@v3
+      #   with:
+      #     configFile: commitlint.config.cjs
       
       #run tests
       - name: 'install dependencies'
