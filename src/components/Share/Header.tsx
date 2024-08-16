@@ -19,6 +19,7 @@ import { Fragment, useEffect, useRef, useTransition } from 'react';
 import useWindowSize from '../hooks/useWindowSize';
 import useOutsideClick from '../hooks/useOutsideClick';
 import 'magnific-popup/dist/magnific-popup.css';
+import { getCookie, setCookie } from 'cookies-next';
 
 const Header = () => {
   const t = useTranslations('Header');
@@ -57,10 +58,21 @@ const Header = () => {
     if (typeof document !== 'undefined') {
       window.jQuery = window.$ = require('jquery');
       require('magnific-popup/dist/jquery.magnific-popup');
-      setTimeout(function () {
+      if (typeof getCookie('acceptCookies') == 'undefined') {
         window.$('body').find('.cookei-popup-link').trigger('click');
-      }, 4000);
+      }
       window.$('.cookei-popup-link').magnificPopup({
+        type: 'inline',
+        preloader: false,
+        focus: '#name',
+      });
+      if (
+        typeof getCookie('acceptCookies') !== 'undefined' &&
+        typeof getCookie('acceptNewsletter') == 'undefined'
+      ) {
+        window.$('body').find('.newsletter-popup-link').trigger('click');
+      }
+      window.$('.newsletter-popup-link').magnificPopup({
         type: 'inline',
         preloader: false,
         focus: '#name',
@@ -101,6 +113,7 @@ const Header = () => {
                     href={''}
                     onClick={() => {
                       window.$.magnificPopup.close();
+                      setCookie('acceptCookies', true);
                     }}
                     className="max-w-full btn bg-white text-dark-900 mb-5 hover:bg-dark-900 hover:text-white"
                   >
@@ -114,6 +127,9 @@ const Header = () => {
                 type="button"
                 name="x"
                 className="mfp-close"
+                onClick={() => {
+                  setCookie('acceptCookies', true);
+                }}
               >
                 x
               </button>
@@ -123,6 +139,77 @@ const Header = () => {
       </div>
       <Link href={'#cookei-popup'} className="cookei-popup-link hidden">
         Cookei Popup
+      </Link>
+      <div
+        id="newsletter-popup"
+        className="mx-auto max-w-[850px] relative mfp-hide"
+      >
+        <div className="bg-white rounded-2xl relative overflow-hidden">
+          <img
+            src="/assets/images/newsletter-shape.svg"
+            alt=""
+            className="block absolute top-0 left-0 max-w-[200px] md:max-w-full"
+          />
+          <div className="flex flex-wrap items-center">
+            <div className="pt-10 md:py-6 px-10 sm:px-16 w-full sm:w-1/2 relative z-1 text-center sm:text-left">
+              <h2 className="text-2xl md:text-3xl mb-2">
+                {t('ourNewsLetter')}
+              </h2>
+              <p className="mb-6 text-dark-800">{t('newsLetterParagraph')}</p>
+              <form className="relative">
+                <input
+                  type="email"
+                  placeholder={t('emailPlaceholder')}
+                  className="form-control bg-gray-400 border border-primary-800 w-full rounded-5xl py-3 pl-6 pr-10"
+                />
+                <button
+                  data-testid="submit-newsletter"
+                  type="submit"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.$.magnificPopup.close();
+                    setCookie('acceptNewsletter', true);
+                  }}
+                  className="btn btn-primary absolute top-2 right-2 w-[35px] h-[35px] p-0 max-w-full min-w-0"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                  >
+                    <path
+                      d="M13.4095 1.3375C13.4095 0.923287 13.0737 0.587501 12.6595 0.5875L5.90948 0.587501C5.49526 0.587501 5.15948 0.923287 5.15948 1.3375C5.15948 1.75171 5.49526 2.0875 5.90948 2.0875H11.9095V8.0875C11.9095 8.50171 12.2453 8.8375 12.6595 8.8375C13.0737 8.8375 13.4095 8.50171 13.4095 8.0875L13.4095 1.3375ZM1.67877 13.3789L13.1898 1.86783L12.1291 0.807171L0.618107 12.3182L1.67877 13.3789Z"
+                      fill="currentColor"
+                    ></path>
+                  </svg>
+                </button>
+              </form>
+            </div>
+            <div className="w-full sm:w-1/2">
+              <img
+                src="/assets/images/newsletter-romantic-getaway-bro.svg"
+                alt=""
+                className="block"
+              />
+            </div>
+          </div>
+        </div>
+        <button
+          title="Close (Esc)"
+          type="button"
+          name="x"
+          className="mfp-close"
+          onClick={() => {
+            setCookie('acceptNewsletter', true);
+          }}
+        >
+          x
+        </button>
+      </div>
+      <Link href={'#newsletter-popup'} className="newsletter-popup-link hidden">
+        Newsletter Popup
       </Link>
       <div className="mfp-hide"></div>
       <div

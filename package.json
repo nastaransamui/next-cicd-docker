@@ -17,6 +17,7 @@
     "@fortawesome/free-brands-svg-icons": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "cookies-next": "^4.2.1",
     "jquery": "^3.7.1",
     "magnific-popup": "^1.2.0",
     "next": "14.2.5",

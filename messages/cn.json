@@ -39,7 +39,19 @@
     "ourCookiePolicy": "我們的 Cookie 保單",
     "lorem": "Lorem Ipsum 只是印刷和排版行業的虛擬文本。自1500 年代以來，Lorem Ipsum 一直是行業的標準虛擬文本，當時一位不知名的印刷商拿走了一堆字體並將其打亂以製作一本字體樣本書它不僅經歷了五個世紀，而且跨越了電子排版，基本上保持不變。",
     "agree": "好的，我同意",
-    "notSeeAnymore": "我不想再看到這個了。"
+    "notSeeAnymore": "我不想再看到這個了。",
+    "ourNewsLetter": "我們的電子報",
+    "newsLetterParagraph": "驅動力應該是那壺毒藥。",
+    "emailPlaceholder": "電子郵件地址"
+  },
+  "Hero": {
+    "letTravelExplore": "讓我們去旅行和探索吧",
+    "discover": "以獨家優惠發現令人驚嘆的地方。",
+    "keyword": "關鍵字",
+    "typeYourKey": "在此輸入您的關鍵字...",
+    "destination": "目的地",
+    "whereTo": "去哪裡？",
+    "checkInCheckOut": "入住 - 退房"
   },
   "NotFoundPage": {
     "description": "未找到此页面",

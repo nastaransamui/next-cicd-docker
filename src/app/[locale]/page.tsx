@@ -1,3 +1,7 @@
+import Herobaner from "@/components/homeComponents/herobaner";
+
 export default function Home() {
-  return <div>this is page</div>;
+  return (
+    <Herobaner />
+  );
 }

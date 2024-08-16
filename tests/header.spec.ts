@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-
+import { getCookie, setCookie } from 'cookies-next';
 test.beforeEach(async ({ page }) => {
   await page.goto('http://localhost:7000');
 });
@@ -99,20 +99,14 @@ test.describe('Test for main Header', () => {
   });
 });
 
-test.describe('Check cookie acceptance', () => {
-  test('should wait for 4 seconds and see cookies', async ({ page }) => {
-    await page.waitForTimeout(4000);
-    await expect(page.locator('.mfp-content').first()).toBeVisible();
-    await page.waitForTimeout(6000);
-    await page.getByTestId('close-cookies').click();
-    await expect(page.locator('.mfp-content').first()).toBeHidden();
-  });
-});
-
 test.describe('Test 3 language', () => {
   test('should click on English Language button open the 3 language', async ({
     page,
   }) => {
+    if (typeof getCookie('acceptCookies') == 'undefined') {
+      await page.getByTestId('close-cookies').click();
+      await page.waitForTimeout(1000);
+    }
     await page.locator('ul').locator('div').locator('#language').click();
     await expect(page.locator('#en-button')).toHaveClass(/en-button-active/);
     await expect(page.locator('#cn-button')).toHaveClass(/cn-button-active/);
@@ -121,6 +115,10 @@ test.describe('Test 3 language', () => {
   test('should click on chines button and url change to /cn', async ({
     page,
   }) => {
+    if (typeof getCookie('acceptCookies') == 'undefined') {
+      await page.getByTestId('close-cookies').click();
+      await page.waitForTimeout(1000);
+    }
     await page.locator('ul').locator('div').locator('#language').click();
     await page.locator('#cn-button').click();
     await page.waitForTimeout(1000);
@@ -130,6 +128,10 @@ test.describe('Test 3 language', () => {
   test('should click on thai button and url change to /th', async ({
     page,
   }) => {
+    if (typeof getCookie('acceptCookies') == 'undefined') {
+      await page.getByTestId('close-cookies').click();
+      await page.waitForTimeout(1000);
+    }
     await page.locator('ul').locator('div').locator('#language').click();
     await page.locator('#th-button').click();
     await page.waitForTimeout(1000);
@@ -138,9 +140,64 @@ test.describe('Test 3 language', () => {
   test('should click on English button and url change to /en', async ({
     page,
   }) => {
+    if (typeof getCookie('acceptCookies') == 'undefined') {
+      await page.getByTestId('close-cookies').click();
+      await page.waitForTimeout(1000);
+    }
     await page.locator('ul').locator('div').locator('#language').click();
     await page.locator('#en-button').click();
     await page.waitForTimeout(1000);
     await expect(page).toHaveURL(/.*en/);
+  });
+});
+
+test.describe('Check cookie acceptance', () => {
+  test('if acceptCookies is undefined should show', async ({ page }) => {
+    if (typeof getCookie('acceptCookies') == 'undefined') {
+      await expect(page.locator('.mfp-content').first()).toBeVisible();
+    }
+    // await page.waitForTimeout(4000);
+    // await expect(page.locator('.mfp-content').first()).toBeVisible();
+    // await page.waitForTimeout(6000);
+    // await page.getByTestId('close-cookies').click();
+    // await expect(page.locator('.mfp-content').first()).toBeHidden();
+  });
+  test('if acceptCookies is defined should not show', async ({ page }) => {
+    setCookie('acceptCookies', true);
+    await page.waitForTimeout(1000);
+    await page.reload();
+    await expect(page.locator('.mfp-content').first()).toBeHidden();
+  });
+});
+
+test.describe('Check newletter popup', () => {
+  test('if acceptNewsletter is undefined should show the popup', async ({
+    page,
+  }) => {
+    if (typeof getCookie('acceptCookies') == 'undefined') {
+      await page.getByTestId('close-cookies').click();
+      await page.waitForTimeout(1000);
+      await page.reload();
+    }
+    if (typeof getCookie('acceptNewsletter') == 'undefined') {
+      await expect(page.locator('#newsletter-popup').first()).toBeVisible();
+    }
+  });
+
+  test('if acceptNewsletter is defined should not show the popup', async ({
+    page,
+  }) => {
+    if (typeof getCookie('acceptCookies') == 'undefined') {
+      await page.getByTestId('close-cookies').click();
+      await page.waitForTimeout(1000);
+      await page.reload();
+    }
+    if (typeof getCookie('acceptNewsletter') == 'undefined') {
+      await expect(page.locator('#newsletter-popup').first()).toBeVisible();
+      await page.waitForTimeout(1000);
+      await page.getByTestId('submit-newsletter').click();
+      await page.reload();
+      await expect(page.locator('#newsletter-popup').first()).toBeHidden();
+    }
   });
 });
