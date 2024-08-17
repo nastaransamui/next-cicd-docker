@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { getCookie, setCookie } from 'cookies-next';
+import { getCookie } from 'cookies-next';
 test.beforeEach(async ({ page }) => {
   await page.goto('http://localhost:7000');
 });
@@ -155,18 +155,11 @@ test.describe('Check cookie acceptance', () => {
   test('if acceptCookies is undefined should show', async ({ page }) => {
     if (typeof getCookie('acceptCookies') == 'undefined') {
       await expect(page.locator('.mfp-content').first()).toBeVisible();
+      await page.waitForTimeout(1000);
+      await page.getByTestId('close-cookies').click();
+      await page.reload();
+      await expect(page.locator('.mfp-content').first()).toBeHidden();
     }
-    // await page.waitForTimeout(4000);
-    // await expect(page.locator('.mfp-content').first()).toBeVisible();
-    // await page.waitForTimeout(6000);
-    // await page.getByTestId('close-cookies').click();
-    // await expect(page.locator('.mfp-content').first()).toBeHidden();
-  });
-  test('if acceptCookies is defined should not show', async ({ page }) => {
-    setCookie('acceptCookies', true);
-    await page.waitForTimeout(1000);
-    await page.reload();
-    await expect(page.locator('.mfp-content').first()).toBeHidden();
   });
 });
 
