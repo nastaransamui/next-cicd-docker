@@ -27,6 +27,6 @@ test('Hero visible elements', async ({ page }) => {
       .getByRole('combobox')
   ).toBeVisible();
   await expect(
-    page.locator('.main-wrapper > .absolute > .object-cover')
+    page.locator('.main-wrapper > .hero-section > .absolute > .object-cover')
   ).toBeVisible();
 });

@@ -80,7 +80,7 @@ test.describe('Test for main Header', () => {
     ).toBeVisible();
   });
   test('should have Tour', async ({ page }) => {
-    await expect(page.getByRole('link', { name: 'Tour' })).toBeVisible();
+    await expect(page.getByTestId('headerTourLink')).toBeVisible();
   });
   test('should have Blog', async ({ page }) => {
     await expect(page.getByRole('link', { name: 'Blog' })).toBeVisible();

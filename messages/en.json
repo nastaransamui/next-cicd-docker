@@ -53,9 +53,28 @@
     "whereTo": "Where to?",
     "checkInCheckOut": "Check in - Check out"
   },
+  "TourSection": {
+    "topDestination": "Top destinations",
+    "lorem": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
+    "southAfrica": "South Africa",
+    "3Tours": "3 Tours",
+    "asia": "Asia",
+    "5Tours": "5 tours",
+    "italy": "Italy",
+    "2Tours": "2 Tours",
+    "thailand": "Thailand",
+    "8Tours": "8 Tours",
+    "egypt": "Egypt",
+    "venice&Rome": "Venice & Rome",
+    "6Tours": "6 Tours",
+    "exploreAll": "Explore all"
+  },
   "NotFoundPage": {
-    "description": "This page not found",
-    "gobackHome": "Go back Home"
+    "error404": "Error 404",
+    "home": "Home",
+    "oops": "Oops! It looks like you're lost.",
+    "pageLooking": "The page you're looking for isn't available. Try to search again or use the go to.",
+    "goBackHome": "Go back to Home"
   },
   "Manifest": {
     "name": "name"

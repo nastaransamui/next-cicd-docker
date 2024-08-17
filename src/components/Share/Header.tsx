@@ -461,7 +461,11 @@ const Header = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link href={'/tour'} className="hover:text-primary-900">
+                  <Link
+                    data-testid="headerTourLink"
+                    href={'/tour'}
+                    className="hover:text-primary-900"
+                  >
                     {t('tour')}
                   </Link>
                 </li>

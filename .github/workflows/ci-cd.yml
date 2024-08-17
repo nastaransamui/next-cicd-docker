@@ -48,7 +48,7 @@ jobs:
       - name: 'install dependencies'
         run: npm ci
       - name: Build the app
-        run: npm run build
+        run: npm run lint:fix && npm run build
       
       - name: install Playwright Browsers
         run: npx playwright install --with-deps

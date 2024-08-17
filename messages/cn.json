@@ -53,9 +53,28 @@
     "whereTo": "去哪裡？",
     "checkInCheckOut": "入住 - 退房"
   },
+  "TourSection": {
+    "topDestination": "熱門目的地",
+    "lorem": "了解真相很重要，教練會跟進的，但就在這個時候發生。",
+    "southAfrica": "南非",
+    "3Tours": "3旅遊",
+    "asia": "亞洲",
+    "5Tours": "5 旅遊",
+    "italy": "義大利",
+    "2Tours": "2旅遊",
+    "thailand": "泰國",
+    "8Tours": "8 次旅行",
+    "egypt": "埃及",
+    "venice&Rome": "威尼斯與羅馬",
+    "6Tours": "6 次遊覽",
+    "exploreAll": "探索全部"
+  },
   "NotFoundPage": {
-    "description": "未找到此页面",
-    "gobackHome": "返回主页"
+    "error404": "錯誤 404",
+    "home": "家",
+    "oops": "哎呀！看來你迷路了。",
+    "pageLooking": "您要尋找的頁面不可用。請嘗試重新搜尋或使用前往。",
+    "goBackHome": "返回首頁"
   },
   "Manifest": {
     "name": "姓名"
