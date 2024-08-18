@@ -35,12 +35,15 @@ test.describe('Top Destination visible and link', () => {
     await page.goto('http://localhost:7000');
     await page.locator('#thirdTour').locator('a').click();
     await expect(page).toHaveURL(/.*destination-details/);
+    await page.waitForTimeout(500);
     await page.goto('http://localhost:7000');
     await page.locator('#forthTour').locator('a').click();
     await expect(page).toHaveURL(/.*destination-details/);
+    await page.waitForTimeout(500);
     await page.goto('http://localhost:7000');
     await page.locator('#fifthTour').locator('a').click();
     await expect(page).toHaveURL(/.*destination-details/);
+    await page.waitForTimeout(500);
     await page.goto('http://localhost:7000');
     await page.locator('#sixthTour').locator('a').click();
     await page.waitForTimeout(500);

@@ -6,6 +6,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import Header from '@/components/Share/Header';
+import Footer from '@/components/Share/Footer';
 config.autoAddCss = false;
 
 const roboto = Roboto_Condensed({ subsets: ['latin'] });
@@ -36,6 +37,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <Header />
           {children}
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>

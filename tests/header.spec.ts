@@ -72,18 +72,16 @@ test.describe('Test for main Header', () => {
     ).toBeVisible();
   });
   test('should have About', async ({ page }) => {
-    await expect(page.getByRole('link', { name: 'About' })).toBeVisible();
+    await expect(page.getByTestId('header-about')).toBeVisible();
   });
   test('should have Destinations', async ({ page }) => {
-    await expect(
-      page.getByRole('link', { name: 'Destinations' })
-    ).toBeVisible();
+    await expect(page.getByTestId('header-destination')).toBeVisible();
   });
   test('should have Tour', async ({ page }) => {
     await expect(page.getByTestId('headerTourLink')).toBeVisible();
   });
   test('should have Blog', async ({ page }) => {
-    await expect(page.getByRole('link', { name: 'Blog' })).toBeVisible();
+    await expect(page.getByTestId('header-blog')).toBeVisible();
   });
   test('should have Hotels', async ({ page }) => {
     await expect(page.getByRole('link', { name: 'Hotels' })).toBeVisible();
@@ -92,7 +90,7 @@ test.describe('Test for main Header', () => {
     await expect(page.getByRole('link', { name: 'Pages' })).toBeVisible();
   });
   test('should have Contact', async ({ page }) => {
-    await expect(page.getByRole('link', { name: 'Contact' })).toBeVisible();
+    await expect(page.getByTestId('header-contact')).toBeVisible();
   });
   test('should have Search icon', async ({ page }) => {
     await expect(page.locator('.search-icon > .bg-primary-900')).toBeVisible();

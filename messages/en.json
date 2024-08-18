@@ -76,6 +76,22 @@
     "pageLooking": "The page you're looking for isn't available. Try to search again or use the go to.",
     "goBackHome": "Go back to Home"
   },
+  "Footer": {
+    "signUpLetter": "Sign up for our newsletter",
+    "saveUp": "Save up to 50% on tours and trips. Get instant access to lower prices.",
+    "emailPlaceholder": "Your email address",
+    "submit": "Submit",
+    "lorem": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempo.",
+    "quickLinks": "Quick Links",
+    "aboutUs": "About Us",
+    "tour": "Tour",
+    "destination": "Destinations",
+    "blog": "Blog",
+    "contact": "Contact Us",
+    "address": "Mae Khu Subdistrict,Doi Saket , Chiang Mai . Thailand  50220",
+    "gallery": "Gallery"
+  },
+
   "Manifest": {
     "name": "name"
   },

@@ -448,12 +448,17 @@ const Header = () => {
                   </ul>
                 </li>
                 <li>
-                  <Link href={'/about'} className="hover:text-primary-900">
+                  <Link
+                    data-testid="header-about"
+                    href={'/about'}
+                    className="hover:text-primary-900"
+                  >
                     {t('about')}
                   </Link>
                 </li>
                 <li>
                   <Link
+                    data-testid="header-destination"
                     href={'/destination'}
                     className="hover:text-primary-900"
                   >
@@ -470,7 +475,11 @@ const Header = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link href={'/blog'} className="hover:text-primary-900">
+                  <Link
+                    data-testid="header-blog"
+                    href={'/blog'}
+                    className="hover:text-primary-900"
+                  >
                     {t('blog')}
                   </Link>
                 </li>
@@ -588,7 +597,11 @@ const Header = () => {
                   </div>
                 </li>
                 <li>
-                  <Link href={'/contact'} className="hover:text-primary-900">
+                  <Link
+                    data-testid="header-contact"
+                    href={'/contact'}
+                    className="hover:text-primary-900"
+                  >
                     {t('contact')}
                   </Link>
                 </li>

@@ -76,6 +76,21 @@
     "pageLooking": "您要尋找的頁面不可用。請嘗試重新搜尋或使用前往。",
     "goBackHome": "返回首頁"
   },
+  "Footer": {
+    "signUpLetter": "訂閱我們的電子報",
+    "saveUp": "旅遊和旅行節省高達 50%。立即獲得更低的價格。",
+    "emailPlaceholder": "您的電子郵件地址",
+    "submit": "提交",
+    "lorem": "照顧病人、遵循指導流程很重要，但我同時也在做。",
+    "quickLinks": "快速連結",
+    "aboutUs": "關於我們",
+    "tour": "遊覽",
+    "destination": "目的地",
+    "blog": "博客",
+    "contact": "聯絡我們",
+    "address": "Mae Khu Subdistrict,Doi Saket , Chiang Mai . Thailand  50220",
+    "gallery": "畫廊"
+  },
   "Manifest": {
     "name": "姓名"
   },
