@@ -82,19 +82,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: appleboy/ssh-action@master
+      - uses: actions/checkout@v4
+
+      - name: Setup SSH Agent and Add Key
+        uses: webfactory/ssh-agent@v0.5.4
         with:
-          # presist credentials is false because we don't want to push the code to heroku from github actions. We want to push the code to heroku from heroku cli.
-          # persist-credentials: false
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to Server via SSH
+        uses: appleboy/ssh-action@master
+        with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /home/majid/applications/next-cicd-docker # we move into our app's folder
-            git pull # we pull any changes from git
+            if [ ! -d "/home/majid/applications/next-cicd-docker" ]; then
+              echo "Directory does not exist. Cloning repository..."
+              mkdir -p /home/majid/applications
+              cd /home/majid/applications
+              git clone https://github.com/nastaransamui/next-cicd-docker.git next-cicd-docker
+            else
+              echo "Directory exists. Pulling changes..."
+              cd /home/majid/applications/next-cicd-docker
+              git pull
+            fi
+
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
             . ~/.bashrc
+
             docker compose up -d --no-deps --build
