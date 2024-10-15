@@ -1,14 +1,10 @@
-# name you can give any name
-name: Continuous Integration and Continuous Deployment on Heroku
+name: Continuous Integration and Deployment
 
-# triggers ci cd when you push code to any branch
 on:
   push:
   pull_request:
-  # this is for manual trigger of ci cd workflow from github actions
   workflow_dispatch:
 
-# jobs is the place where you define all the steps
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -17,93 +13,69 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          # Fetch all history for all branches and tags
           fetch-depth: 0
 
-      # install nodejs
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '20.x'
 
-      # install dependencies
       - name: Install Dependencies
         run: npm install
 
-      # run linters
       - name: Run Linters
         run: npm run lint
 
-      # run formater
-      - name: Run Formater
+      - name: Run Formatter
         run: npm run format
 
-      # verify the commit message with commitlint and commitlint.config.js
-      # - name: Verify Commit Message
-      #   uses: wagoid/commitlint-github-action@v3
-      #   with:
-      #     configFile: commitlint.config.cjs
-      
-      #run tests
-      - name: 'install dependencies'
-        run: npm ci
-      - name: Build the app
-        run: npm run lint:fix && npm run build
-      
-      - name: install Playwright Browsers
+      - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Run Playwright test
-        run: npx playwright test --project chromium
+      - name: Build and Run Tests
+        run: |
+          npm run lint:fix
+          npm run build
+          npx playwright test --project chromium
 
       - uses: actions/upload-artifact@v4
-        if: always()
         with:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
-      
-      
-      # build docker image for ci cd pipeline
-      # Name should be same as the name of the image in docker-compose.yml file with tag 1.0 and . represents the path of the dockerfile in the repo.
+
       - name: Build Docker Image
         run: docker build -t nextjs-cicd-docker:1.0 .
 
-  # add another job for deployment
   deploy:
     name: Deploy to Ubuntu
-
-    # this job will run only when the build-and-test job is successful
     needs: build-and-test
-
-    # if condition is because we want to run this job only when we push code to main branch and not on pull request or any other branch push or manual trigger. In ci we want ci to run on push and pull request but we want cd to run only on push to main branch.
     if: (github.ref == 'refs/heads/main' && github.event_name == 'push') || github.event_name == 'workflow_dispatch'
-
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup SSH Agent and Add Key
+      - name: Setup SSH Agent and Add Private Key
         uses: webfactory/ssh-agent@v0.5.4
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Deploy to Server via SSH
+      - name: Deploy via SSH
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           script: |
-            if [ ! -d "/home/majid/applications/next-cicd-docker" ]; then
+            if [ ! -d "/home/${{ secrets.USERNAME }}/applications/next-cicd-docker" ]; then
               echo "Directory does not exist. Cloning repository..."
-              mkdir -p /home/majid/applications
-              cd /home/majid/applications
+              mkdir -p /home/${{ secrets.USERNAME }}/applications
+              cd /home/${{ secrets.USERNAME }}/applications
               git clone https://github.com/nastaransamui/next-cicd-docker.git next-cicd-docker
             else
               echo "Directory exists. Pulling changes..."
-              cd /home/majid/applications/next-cicd-docker
+              cd /home/${{ secrets.USERNAME }}/applications/next-cicd-docker
               git pull
             fi
 
