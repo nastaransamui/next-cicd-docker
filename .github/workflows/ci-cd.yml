@@ -79,6 +79,4 @@ jobs:
               cd /home/${{ secrets.USERNAME }}/applications/next-cicd-docker
               git pull
             fi
-            sudo usermod -aG docker $USER
-            newgrp docker
-            docker compose up -d --no-deps --build
+            sudo docker compose up -d --no-deps --build
