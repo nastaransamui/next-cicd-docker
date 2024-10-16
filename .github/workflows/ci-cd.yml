@@ -56,26 +56,29 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Start SSH Agent and Add Key
+      - name: Setup SSH Agent and Add Private Key
         uses: webfactory/ssh-agent@v0.5.4
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-      - name: Connect to Server and Deploy
+      - name: Deploy via SSH
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }} # Private key content here
+          key_path: /home/runner/.ssh/id_rsa   # This is the correct input name
           script: |
-            if [ ! -d "/home/runner/applications/next-cicd-docker" ]; then
-            mkdir -p /home/runner/applications
-            cd /home/runner/applications
-            git clone https://github.com/nastaransamui/next-cicd-docker.git
+            if [ ! -d "/home/${{ secrets.USERNAME }}/applications/next-cicd-docker" ]; then
+              echo "Directory does not exist. Cloning repository..."
+              mkdir -p /home/${{ secrets.USERNAME }}/applications
+              cd /home/${{ secrets.USERNAME }}/applications
+              git clone https://github.com/nastaransamui/next-cicd-docker.git next-cicd-docker
             else
-              cd /home/runner/applications/next-cicd-docker
+              echo "Directory exists. Pulling changes..."
+              cd /home/${{ secrets.USERNAME }}/applications/next-cicd-docker
               git pull
             fi
-
-              sudo usermod -aG docker $USER
-              newgrp docker
-              sudo docker compose up -d --no-deps --build
+            sudo usermod -aG docker $USER
+            newgrp docker
+            docker compose up -d --no-deps --build
