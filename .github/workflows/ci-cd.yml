@@ -60,15 +60,14 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.4
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
       - name: Deploy via SSH
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          key-path: /home/runner/.ssh/id_rsa
+          key: ${{ secrets.SSH_PRIVATE_KEY }} # Private key content here
+          key_path: /home/runner/.ssh/id_rsa   # This is the correct input name
           script: |
             if [ ! -d "/home/${{ secrets.USERNAME }}/applications/next-cicd-docker" ]; then
               echo "Directory does not exist. Cloning repository..."
@@ -80,10 +79,4 @@ jobs:
               cd /home/${{ secrets.USERNAME }}/applications/next-cicd-docker
               git pull
             fi
-
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-            . ~/.bashrc
-
             docker compose up -d --no-deps --build
